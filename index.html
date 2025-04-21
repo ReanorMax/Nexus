@@ -1,0 +1,1614 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nexus Sonatype - Современный менеджер репозиториев для управления бинарными артефактами и пакетами">
+    <title>Nexus Sonatype - Modern Repository Manager</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2L2 7L12 12L22 7L12 2Z' stroke='%2300B4CE' stroke-width='2' fill='none' /%3E%3Cpath d='M2 17L12 22L22 17' stroke='%2300B4CE' stroke-width='2' fill='none' /%3E%3Cpath d='M2 12L12 17L22 12' stroke='%2300B4CE' stroke-width='2' fill='none' /%3E%3C/svg%3E">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Nexus Sonatype</span>
+            </div>
+            <div class="tabs">
+                <button class="tab-btn" data-tab="product-tab">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 2V4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 20V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M4.93 4.93L6.34 6.34" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M17.66 17.66L19.07 19.07" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 12H4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M20 12H22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M4.93 19.07L6.34 17.66" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M17.66 6.34L19.07 4.93" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    О продукте
+                </button>
+                <button class="tab-btn" data-tab="installation-tab">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21 2H3V22H21V2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M7 2V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M17 2V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Установка Docker
+                </button>
+                <button class="tab-btn" data-tab="apt-tab">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M3 9H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 21V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    APT Репозитории
+                </button>
+                <button class="tab-btn" data-tab="deb-packages-tab">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21 16V8C21 6.89543 20.1046 6 19 6H5C3.89543 6 3 6.89543 3 8V16C3 17.1046 3.89543 18 5 18H19C20.1046 18 21 17.1046 21 16Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M3 10H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Создание .deb пакетов
+                </button>
+                <button class="tab-btn" data-tab="other-repos-tab">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16 4H9C7.89543 4 7 4.89543 7 6V20C7 21.1046 7.89543 22 9 22H16C17.1046 22 18 21.1046 18 20V6C18 4.89543 17.1046 4 16 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 18H13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Другие репозитории
+                </button>
+                <button class="tab-btn" data-tab="visualization-tab">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22 12.5C22 12.5 18 16.5 12 16.5C6 16.5 2 12.5 2 12.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 12.5C2 12.5 6 8.5 12 8.5C18 8.5 22 12.5 22 12.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 14.5C13.1046 14.5 14 13.6046 14 12.5C14 11.3954 13.1046 10.5 12 10.5C10.8954 10.5 10 11.3954 10 12.5C10 13.6046 10.8954 14.5 12 14.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Визуализация
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Product Tab Content -->
+        <div class="tab-content active" id="product-tab">
+            <section class="hero">
+                <div class="container">
+                    <div class="hero-content">
+                        <h1>Nexus Sonatype</h1>
+                        <p class="subtitle">Современный менеджер репозиториев для ваших артефактов</p>
+                    </div>
+                    <div class="hero-image">
+                        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="blob-animation">
+                            <path fill="#6366F1" d="M44.9,-76.5C58.3,-69.7,69.4,-57.5,77.3,-43.4C85.2,-29.2,89.8,-13.1,88.4,2.4C87,17.9,79.6,32.9,69.7,45.5C59.9,58.1,47.6,68.4,33.7,74.5C19.7,80.6,4,82.5,-11.6,80.1C-27.2,77.7,-42.7,71,-54.4,60.3C-66.1,49.5,-74,34.7,-79.4,18.3C-84.8,1.9,-87.7,-16,-82.7,-30.9C-77.6,-45.8,-64.6,-57.8,-50,-64.8C-35.4,-71.8,-19.2,-73.7,-1.9,-70.8C15.5,-67.8,31.5,-83.3,44.9,-76.5Z" transform="translate(100 100)" />
+                        </svg>
+                        <div class="repository-visualization">
+                            <div class="artifact artifact-1" data-speed="0.04"></div>
+                            <div class="artifact artifact-2" data-speed="0.05"></div>
+                            <div class="artifact artifact-3" data-speed="0.03"></div>
+                            <div class="repository"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="about" class="about">
+                <div class="container">
+                    <h2>Установка и настройка Nexus Sonatype</h2>
+                    <div class="about-content">
+                        <div class="about-text">
+                            <p>Nexus Sonatype — это менеджер репозиториев, который обеспечивает централизованное хранение и управление вашими артефактами. Он значительно упрощает процесс разработки программного обеспечения и обеспечивает безопасность ваших компонентов.</p>
+                        </div>
+                        <div class="feature-icons-grid">
+                            <div class="feature-icon-card">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M20 7H4C2.89543 7 2 7.89543 2 9V19C2 20.1046 2.89543 21 4 21H20C21.1046 21 22 20.1046 22 19V9C22 7.89543 21.1046 7 20 7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M16 21V5C16 3.89543 15.1046 3 14 3H10C8.89543 3 8 3.89543 8 5V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <h3>Централизованное хранение</h3>
+                                <p>Храните и управляйте всеми вашими артефактами в одном месте с возможностью контроля версий</p>
+                            </div>
+                            <div class="feature-icon-card">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <h3>Гибкая настройка</h3>
+                                <p>Настраивайте доступ к репозиториям и управляйте правами для различных команд разработчиков</p>
+                            </div>
+                            <div class="feature-icon-card">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <h3>Поддержка различных форматов</h3>
+                                <p>Работайте с Maven, npm, Docker, APT, RPM и другими форматами в одной системе</p>
+                            </div>
+                        </div>
+                        <div class="about-card">
+                            <h3>Зачем нужен Sonatype Nexus?</h3>
+                            <ul class="feature-list">
+                                <li>
+                                    <div class="feature-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M20 7H4C2.89543 7 2 7.89543 2 9V19C2 20.1046 2.89543 21 4 21H20C21.1046 21 22 20.1046 22 19V9C22 7.89543 21.1046 7 20 7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M16 21V5C16 3.89543 15.1046 3 14 3H10C8.89543 3 8 3.89543 8 5V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <span>Хранение и управление артефактами</span>
+                                </li>
+                                <li>
+                                    <div class="feature-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    </div>
+                                    <span>Проксирование внешних репозиториев для кеширования артефактов</span>
+                                </li>
+                                <li>
+                                    <div class="feature-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M16 4H9C7.89543 4 7 4.89543 7 6V20C7 21.1046 7.89543 22 9 22H16C17.1046 22 18 21.1046 18 20V6C18 4.89543 17.1046 4 16 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M16 13H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <span>Управление зависимостями в проектах</span>
+                                </li>
+                                <li>
+                                    <div class="feature-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M12 16V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M12 8H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <span>Обеспечение безопасности и контроля доступа к артефактам</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="artifacts" class="artifacts">
+                <div class="container">
+                    <h2>Что такое артефакты в Nexus?</h2>
+                    <div class="artifacts-content">
+                        <div class="artifacts-description">
+                            <p>В контексте Nexus артефакт — это любой бинарный файл, который хранится в репозитории. Артефакты могут быть разных типов и имеют определенную структуру.</p>
+                        </div>
+                        <div class="artifacts-types">
+                            <h3>Типы артефактов</h3>
+                            <div class="cards-grid">
+                                <div class="card">
+                                    <div class="card-icon">
+                                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M20 7H4C2.89543 7 2 7.89543 2 9V19C2 20.1046 2.89543 21 4 21H20C21.1046 21 22 20.1046 22 19V9C22 7.89543 21.1046 7 20 7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M16 21V5C16 3.89543 15.1046 3 14 3H10C8.89543 3 8 3.89543 8 5V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <h4>Библиотеки</h4>
+                                    <p>JAR-файлы для Java, DLL для .NET</p>
+                                </div>
+                                <div class="card">
+                                    <div class="card-icon">
+                                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M21 2H3V22H21V2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M7 2V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M17 2V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <h4>Образы</h4>
+                                    <p>Docker-образы и контейнеры</p>
+                                </div>
+                                <div class="card">
+                                    <div class="card-icon">
+                                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1 2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <h4>Установочные файлы</h4>
+                                <p>RPM, DEB пакеты</p>
+                            </div>
+                            <div class="card">
+                                <div class="card-icon">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M4 22H20C21.1046 22 22 21.1046 22 20V8L16 2H4C2.89543 2 2 2.89543 2 4V20C2 21.1046 2.89543 22 4 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M14 2V8H22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <h4>Другие файлы</h4>
+                                <p>ZIP-архивы, конфигурации</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="artifact-structure">
+                        <h3>Структура артефактов</h3>
+                        <div class="structure-items">
+                            <div class="structure-item">
+                                <div class="item-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M44.9,-76.5C58.3,-69.7,69.4,-57.5,77.3,-43.4C85.2,-29.2,89.8,-13.1,88.4,2.4C87,17.9,79.6,32.9,69.7,45.5C59.9,58.1,47.6,68.4,33.7,74.5C19.7,80.6,4,82.5,-11.6,80.1C-27.2,77.7,-42.7,71,-54.4,60.3C-66.1,49.5,-74,34.7,-79.4,18.3C-84.8,1.9,-87.7,-16,-82.7,-30.9C-77.6,-45.8,-64.6,-57.8,-50,-64.8C-35.4,-71.8,-19.2,-73.7,-1.9,-70.8C15.5,-67.8,31.5,-83.3,44.9,-76.5Z" transform="translate(100 100)" />
+                                    </svg>
+                                </div>
+                                <div class="item-content">
+                                    <h4>Имя</h4>
+                                    <p>Например, my-library</p>
+                                </div>
+                            </div>
+                            <div class="structure-item">
+                                <div class="item-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <div class="item-content">
+                                    <h4>Версия</h4>
+                                    <p>Например, 1.0.0</p>
+                                </div>
+                            </div>
+                            <div class="structure-item">
+                                <div class="item-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M16 13H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M16 17H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M10 9H9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <div class="item-content">
+                                    <h4>Тип</h4>
+                                    <p>Например, JAR, WAR, TGZ</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="repos" class="repos">
+                <div class="container">
+                    <h2>Типы репозиториев в Nexus</h2>
+                    <p class="section-description">Nexus поддерживает множество типов репозиториев, и не все они связаны с артефактами.</p>
+                    <div class="repo-types">
+                        <div class="repo-card">
+                            <div class="repo-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M3 9H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M9 21V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h3>Raw</h3>
+                            <p>Для произвольных файлов (например, ZIP, TXT, JSON)</p>
+                            <span class="example">Пример: raw-hosted</span>
+                        </div>
+                        <div class="repo-card">
+                            <div class="repo-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h3>RPM</h3>
+                            <p>Для пакетов Linux (RPM)</p>
+                            <span class="example">Пример: rpm-hosted</span>
+                        </div>
+                        <div class="repo-card">
+                            <div class="repo-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M3 9H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M9 21V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h3>Binary</h3>
+                            <p>Для бинарных файлов (например, .zip, .tar.gz, .exe)</p>
+                            <span class="example">Пример: binary-repo</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="features" class="features">
+                <div class="container">
+                    <h2>Как Nexus управляет артефактами?</h2>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-card-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M16 16V18C16 19.1046 15.1046 20 14 20H6C4.89543 20 4 19.1046 4 18V9C4 7.89543 4.89543 7 6 7H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M12 16L20 16V4L12 4V16Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M12 12L20 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M12 8L20 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h3>Загрузка и скачивание</h3>
+                            <p>Артефакты можно загружать через веб-интерфейс, API или клиентские инструменты</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-card-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M12 18H13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h3>Поиск</h3>
+                            <p>Nexus позволяет искать артефакты по имени, версии, типу и другим метаданным</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-card-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M16 13H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M16 17H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M10 9H9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h3>Управление версиями</h3>
+                            <p>Nexus поддерживает версионность артефактов (например, 1.0.0, 1.0.1-SNAPSHOT)</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-card-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h3>Автоматизация</h3>
+                            <p>Интеграция с CI/CD системами для автоматического развертывания артефактов</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="benefits" class="benefits">
+                <div class="container">
+                    <h2>Преимущества Nexus</h2>
+                    <div class="benefits-content">
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M12 2V4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M12 20V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M4.93 4.93L6.34 6.34" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M17.66 17.66L19.07 19.07" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M2 12H4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M20 12H22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M4.93 19.07L6.34 17.66" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M17.66 6.34L19.07 4.93" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h3>Централизованное управление</h3>
+                            <p>Все артефакты хранятся в одном месте</p>
+                        </div>
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h3>Повышение производительности</h3>
+                            <p>Прокси-репозитории кэшируют внешние артефакты, ускоряя сборку</p>
+                        </div>
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M7 11V7C7 5.67392 7.52678 4.40215 8.46447 3.46447C9.40215 2.52678 10.6739 2 12 2C13.3261 2 14.5979 2.52678 15.5355 3.46447C16.4732 4.40215 17 5.67392 17 7V11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h3>Безопасность</h3>
+                            <p>Контроль доступа и сканирование на уязвимости</p>
+                        </div>
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M22 19C22 19.5304 21.7893 20.0391 21.4142 20.4142C21.0391 20.7893 20.5304 21 20 21H4C3.46957 21 2.96086 20.7893 2.58579 20.4142C2.21071 20.0391 2 19.5304 2 19V5C2 4.46957 2.21071 3.96086 2.58579 3.58579C2.96086 2.21071 3.46957 2 4 2H9L11 6H20C20.5304 6 21.0391 6.21071 21.4142 6.58579C21.7893 6.96086 22 7.46957 22 8V19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h3>Гибкость</h3>
+                            <p>Поддержка множества форматов и интеграция с различными инструментами</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Installation Tab Content -->
+        <div class="tab-content" id="installation-tab">
+            <section class="hero installation-hero">
+                <div class="container">
+                    <div class="hero-content">
+                        <h1>Установка Nexus с Docker</h1>
+                        <p class="subtitle">Пошаговое руководство по настройке Docker и развертыванию Nexus Repository на вашем сервере</p>
+                    </div>
+                    <div class="hero-image">
+                        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="blob-animation">
+                            <path fill="#6366F1" d="M44.9,-76.5C58.3,-69.7,69.4,-57.5,77.3,-43.4C85.2,-29.2,89.8,-13.1,88.4,2.4C87,17.9,79.6,32.9,69.7,45.5C59.9,58.1,47.6,68.4,33.7,74.5C19.7,80.6,4,82.5,-11.6,80.1C-27.2,77.7,-42.7,71,-54.4,60.3C-66.1,49.5,-74,34.7,-79.4,18.3C-84.8,1.9,-87.7,-16,-82.7,-30.9C-77.6,-45.8,-64.6,-57.8,-50,-64.8C-35.4,-71.8,-19.2,-73.7,-1.9,-70.8C15.5,-67.8,31.5,-83.3,44.9,-76.5Z" transform="translate(100 100)" />
+                        </svg>
+                        <div class="docker-nexus-image">
+                            <svg width="150" height="150" viewBox="0 0 512 512" class="docker-logo">
+                                <path fill="#00B4CE" d="M47.5 236.5c.3-.3 6.1-4.9 18.7-5.7 9.5-.5 17.2 1.2 23.2 5 4.3-3.6 11.9-5.8 18.9-5.3 8.4.6 15.8 5.5 19.6 13.3 7.5-9.3 19.5-10.8 27.3-9.2 6.8 1.4 14.8 5.9 18.2 16.2 6.1-7.1 20.5-9.9 32.1-6.1 9.6 3.1 15.6 9.7 16.4 10.6-4-25.3-32-38.3-48.7-40.9-12.6-1.9-32.3 1.3-40.3 8.6-8.3-9.9-34.6-13.9-55.7 0-8.1-14.1-39.5-18.1-54.6 2-13.2-4.3-31.4-2.2-40.1 7.4-10.5 11.5-12.8 23.2-11.3 33.3 1.8 11.3 8 21.8 17.7 28.9 7.2 5.3 15.8 8.1 25.2 8.2 8.9.1 17.9-2.1 26.4-6.5"></path>
+                                <path fill="#00B4CE" d="M74.3 227.9c6.8-7.5 19.9-8.1 27.4-1.3 7.5 6.8 8.1 19.9 1.3 27.4-6.7 7.5-19.9 8.1-27.4 1.3-7.5-6.8-8.1-19.9-1.3-27.4zm49.3-12.1c6.8-7.5 19.9-8.1 27.4-1.3 7.5 6.8 8.1 19.9 1.3 27.4-6.7 7.5-19.9 8.1-27.4 1.3-7.5-6.8-8.1-19.9-1.3-27.4zm49.7 2.6c6.8-7.5 19.9-8.1 27.4-1.3 7.5 6.8 8.1 19.9 1.3 27.4-6.7 7.5-19.9 8.1-27.4 1.3-7.5-6.8-8.1-19.9-1.3-27.4zm-74.6 47.7c6.8-7.5 19.9-8.1 27.4-1.3 7.5 6.8 8.1 19.9 1.3 27.4-6.7 7.5-19.9 8.1-27.4 1.3-7.5-6.8-8.1-19.9-1.3-27.4zm49.4.2c6.8-7.5 19.9-8.1 27.4-1.3 7.5 6.8 8.1 19.9 1.3 27.4-6.7 7.5-19.9 8.1-27.4 1.3-7.5-6.8-8.1-19.9-1.3-27.4zm49.9-2.3c6.8-7.5 19.9-8.1 27.4-1.3 7.5 6.8 8.1 19.9 1.3 27.4-6.7 7.5-19.9 8.1-27.4 1.3-7.5-6.8-8.1-19.9-1.3-27.4zm50.1-12c6.8-7.5 19.9-8.1 27.4-1.3 7.5 6.8 8.1 19.9 1.3 27.4-6.7 7.5-19.9 8.1-27.4 1.3-7.5-6.8-8.1-19.9-1.3-27.4zm-25.2-35.5c6.8-7.5 19.9-8.1 27.4-1.3 7.5 6.8 8.1 19.9 1.3 27.4-6.7 7.5-19.9 8.1-27.4 1.3-7.5-6.8-8.1-19.9-1.3-27.4zm0 47.5c6.8-7.5 19.9-8.1 27.4-1.3 7.5 6.8 8.1 19.9 1.3 27.4-6.7 7.5-19.9 8.1-27.4 1.3-7.5-6.8-8.1-19.9-1.3-27.4z"></path>
+                                <path fill="#00B4CE" d="M424 306.6c-3.1-2.8-16.4-12.1-39.2-12.1-7.1 0-14.7 1.1-22.1 3-5-36-38.5-51.6-40.2-52.6l-8-4.6-5.3 7.6c-6.5 9.6-11.5 20.6-14.3 31.6-2.8 10.9-2.2 21.9 1.7 32.5-6.3 3.5-16.3 8.8-30.6 8.8H34c-9.4 0-17 7.6-17 17 0 .8 0 2.8.7 7.5 4.8 32.1 24.3 59.5 54.7 77.4 26.5 15.6 15.6 58.7 23.6 97.6 23.6 18.4 0 36.6-1.6 54.3-4.8 25-4.5 48.6-13 69.8-25.4 17.8-10.3 33.4-23.6 46.1-39.2 22.1-27.1 35.2-57.2 44.1-83.8 1.3.1 2.5.4 3.7.4 9.1 0 14.6-1.7 18.8-3.2 6.5-2.1 11.7-5 16.1-9.8l3.9-4.3-6.8-6.4z"></path>
+                            </svg>
+                            <svg width="150" height="150" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="nexus-logo">
+                                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#00B4CE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 17L12 22L22 17" stroke="#00B4CE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 12L12 17L22 12" stroke="#00B4CE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="installation premium-section">
+                <div class="container">
+                    <h2>Установка Docker на Debian</h2>
+                    <p class="section-description">Перед установкой Nexus Sonatype, необходимо настроить Docker на вашем сервере.</p>
+                    
+                    <div style="text-align: center; margin-bottom: 2rem;">
+                        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="color: rgba(255,255,255,0.9);">
+                            <path d="M22 12.5C22 12.5 18 16.5 12 16.5C6 16.5 2 12.5 2 12.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M2 12.5C2 12.5 6 8.5 12 8.5C18 8.5 22 12.5 22 12.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 14.5C13.1046 14.5 14 13.6046 14 12.5C14 11.3954 13.1046 10.5 12 10.5C10.8954 10.5 10 11.3954 10 12.5C10 13.6046 10.8954 14.5 12 14.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    
+                    <div class="installation-steps">
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">1</div>
+                                <h3>Обновление системы</h3>
+                            </div>
+                            <p>Убедитесь, что ваша система обновлена до последней версии:</p>
+                            <div class="code-block">
+                                <code>sudo apt update<br>sudo apt upgrade -y</code>
+                                <button class="copy-btn" data-code="sudo apt update&#10;sudo apt upgrade -y">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 9H11C9.89543 9 9 9.89543 9 11V20C9 21.1046 9.89543 22 11 22H20C21.1046 22 22 21.1046 22 20V11C22 9.89543 21.1046 9 20 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M5 15H4C3.46957 15 2.96086 14.7893 2.58579 14.4142C2.21071 14.0391 2 13.5304 2 13V4C2 3.46957 2.21071 2.96086 2.58579 2.58579C2.96086 2.21071 3.46957 2 4 2H13C13.5304 2 14.0391 2.21071 14.4142 2.58579C14.7893 2.96086 15 3.46957 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">2</div>
+                                <h3>Установка необходимых пакетов</h3>
+                            </div>
+                            <p>Установите пакеты, которые позволят использовать репозиторий через HTTPS:</p>
+                            <div class="code-block">
+                                <code>sudo apt install -y apt-transport-https ca-certificates curl software-properties-common gnupg lsb-release</code>
+                                <button class="copy-btn" data-code="sudo apt install -y apt-transport-https ca-certificates curl software-properties-common gnupg lsb-release">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 9H11C9.89543 9 9 9.89543 9 11V20C9 21.1046 9.89543 22 11 22H20C21.1046 22 22 21.1046 22 20V11C22 9.89543 21.1046 9 20 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M5 15H4C3.46957 15 2.96086 14.7893 2.58579 14.4142C2.21071 14.0391 2 13.5304 2 13V4C2 3.46957 2.21071 2.96086 2.58579 2.58579C2.96086 2.21071 3.46957 2 4 2H13C13.5304 2 14.0391 2.21071 14.4142 2.58579C14.7893 2.96086 15 3.46957 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">3</div>
+                                <h3>Добавление GPG-ключа Docker</h3>
+                            </div>
+                            <p>Добавьте официальный GPG-ключ Docker для проверки подлинности репозитория:</p>
+                            <div class="code-block">
+                                <code>curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg</code>
+                                <button class="copy-btn" data-code="curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 9H11C9.89543 9 9 9.89543 9 11V20C9 21.1046 9.89543 22 11 22H20C21.1046 22 22 21.1046 22 20V11C22 9.89543 21.1046 9 20 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M5 15H4C3.46957 15 2.96086 14.7893 2.58579 14.4142C2.21071 14.0391 2 13.5304 2 13V4C2 3.46957 2.21071 2.96086 2.58579 2.58579C2.96086 2.21071 3.46957 2 4 2H13C13.5304 2 14.0391 2.21071 14.4142 2.58579C14.7893 2.96086 15 3.46957 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">4</div>
+                                <h3>Добавление репозитория Docker</h3>
+                            </div>
+                            <p>Добавьте репозиторий Docker в список источников APT:</p>
+                            <div class="code-block">
+                                <code>echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null</code>
+                                <button class="copy-btn" data-code="echo &quot;deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable&quot; | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 9H11C9.89543 9 9 9.89543 9 11V20C9 21.1046 9.89543 22 11 22H20C21.1046 22 22 21.1046 22 20V11C22 9.89543 21.1046 9 20 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M5 15H4C3.46957 15 2.96086 14.7893 2.58579 14.4142C2.21071 14.0391 2 13.5304 2 13V4C2 3.46957 2.21071 2.96086 2.58579 2.58579C2.96086 2.21071 3.46957 2 4 2H13C13.5304 2 14.0391 2.21071 14.4142 2.58579C14.7893 2.96086 15 3.46957 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">5</div>
+                                <h3>Обновление индекса пакетов</h3>
+                            </div>
+                            <p>Обновите индекс пакетов после добавления репозитория:</p>
+                            <div class="code-block">
+                                <code>sudo apt update</code>
+                                <button class="copy-btn" data-code="sudo apt update">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 9H11C9.89543 9 9 9.89543 9 11V20C9 21.1046 9.89543 22 11 22H20C21.1046 22 22 21.1046 22 20V11C22 9.89543 21.1046 9 20 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M5 15H4C3.46957 15 2.96086 14.7893 2.58579 14.4142C2.21071 14.0391 2 13.5304 2 13V4C2 3.46957 2.21071 2.96086 2.58579 2.58579C2.96086 2.21071 3.46957 2 4 2H13C13.5304 2 14.0391 2.21071 14.4142 2.58579C14.7893 2.96086 15 3.46957 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">6</div>
+                                <h3>Установка Docker</h3>
+                            </div>
+                            <p>Установите Docker Engine, Docker CLI и containerd:</p>
+                            <div class="code-block">
+                                <code>sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin</code>
+                                <button class="copy-btn" data-code="sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 9H11C9.89543 9 9 9.89543 9 11V20C9 21.1046 9.89543 22 11 22H20C21.1046 22 22 21.1046 22 20V11C22 9.89543 21.1046 9 20 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M5 15H4C3.46957 15 2.96086 14.7893 2.58579 14.4142C2.21071 14.0391 2 13.5304 2 13V4C2 3.46957 2.21071 2.96086 2.58579 2.58579C2.96086 2.21071 3.46957 2 4 2H13C13.5304 2 14.0391 2.21071 14.4142 2.58579C14.7893 2.96086 15 3.46957 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">7</div>
+                                <h3>Запуск и включение Docker</h3>
+                            </div>
+                            <p>Запустите Docker и настройте его автозапуск при загрузке системы:</p>
+                            <div class="code-block">
+                                <code>sudo systemctl start docker<br>sudo systemctl enable docker</code>
+                                <button class="copy-btn" data-code="sudo systemctl start docker&#10;sudo systemctl enable docker">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 9H11C9.89543 9 9 9.89543 9 11V20C9 21.1046 9.89543 22 11 22H20C21.1046 22 22 21.1046 22 20V11C22 9.89543 21.1046 9 20 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M5 15H4C3.46957 15 2.96086 14.7893 2.58579 14.4142C2.21071 14.0391 2 13.5304 2 13V4C2 3.46957 2.21071 2.96086 2.58579 2.58579C2.96086 2.21071 3.46957 2 4 2H13C13.5304 2 14.0391 2.21071 14.4142 2.58579C14.7893 2.96086 15 3.46957 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">8</div>
+                                <h3>Проверка установки Docker</h3>
+                            </div>
+                            <p>Убедитесь, что Docker установлен и работает:</p>
+                            <div class="code-block">
+                                <code>docker --version<br>sudo systemctl status docker</code>
+                                <button class="copy-btn" data-code="docker --version&#10;sudo systemctl status docker">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 9H11C9.89543 9 9 9.89543 9 11V20C9 21.1046 9.89543 22 11 22H20C21.1046 22 22 21.1046 22 20V11C22 9.89543 21.1046 9 20 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M5 15H4C3.46957 15 2.96086 14.7893 2.58579 14.4142C2.21071 14.0391 2 13.5304 2 13V4C2 3.46957 2.21071 2.96086 2.58579 2.58579C2.96086 2.21071 3.46957 2 4 2H13C13.5304 2 14.0391 2.21071 14.4142 2.58579C14.7893 2.96086 15 3.46957 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="nexus-docker premium-section">
+                <div class="container">
+                    <h2>Установка Nexus Repository Manager 3 в Docker</h2>
+                    <p class="section-description">После успешной установки Docker, вы можете запустить Nexus в контейнере</p>
+                    
+                    <div class="installation-steps">
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">1</div>
+                                <h3>Создание директории для хранения данных Nexus</h3>
+                            </div>
+                            <p>Создайте директорию на хосте для хранения данных Nexus, чтобы они сохранялись при перезапуске контейнера:</p>
+                            <div class="code-block">
+                                <code>sudo mkdir -p /opt/nexus-data
+sudo chown -R 200 /opt/nexus-data</code>
+                                <button class="copy-btn" data-code="sudo mkdir -p /opt/nexus-data&#10;sudo chown -R 200 /opt/nexus-data">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 9H11C9.89543 9 9 9.89543 9 11V20C9 21.1046 9.89543 22 11 22H20C21.1046 22 22 21.1046 22 20V11C22 9.89543 21.1046 9 20 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M5 15H4C3.46957 15 2.96086 14.7893 2.58579 14.4142C2.21071 14.0391 2 13.5304 2 13V4C2 3.46957 2.21071 2.96086 2.58579 2.58579C2.96086 2.21071 3.46957 2 4 2H13C13.5304 2 14.0391 2.21071 14.4142 2.58579C14.7893 2.96086 15 3.46957 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <p>UID 200 соответствует пользователю внутри контейнера Nexus, чтобы избежать проблем с правами доступа.</p>
+                        </div>
+                        
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">2</div>
+                                <h3>Запуск контейнера Nexus</h3>
+                            </div>
+                            <p>Запустите контейнер Nexus с использованием официального образа sonatype/nexus3:</p>
+                            <div class="code-block">
+                                <code>docker run -d \
+  --name nexus \
+  -p 8081:8081 \
+  -v /opt/nexus-data:/nexus-data \
+  sonatype/nexus3:latest</code>
+                                <button class="copy-btn" data-code="docker run -d \&#10;  --name nexus \&#10;  -p 8081:8081 \&#10;  -v /opt/nexus-data:/nexus-data \&#10;  sonatype/nexus3:latest">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 9H11C9.89543 9 9 9.89543 9 11V20C9 21.1046 9.89543 22 11 22H20C21.1046 22 22 21.1046 22 20V11C22 9.89543 21.1046 9 20 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M5 15H4C3.46957 15 2.96086 14.7893 2.58579 14.4142C2.21071 14.0391 2 13.5304 2 13V4C2 3.46957 2.21071 2.96086 2.58579 2.58579C2.96086 2.21071 3.46957 2 4 2H13C13.5304 2 14.0391 2.21071 14.4142 2.58579C14.7893 2.96086 15 3.46957 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="note">
+                                <p><strong>Объяснение параметров:</strong></p>
+                                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                                    <li><code>-d</code> — запуск в фоновом режиме.</li>
+                                    <li><code>--name nexus</code> — имя контейнера.</li>
+                                    <li><code>-p 8081:8081</code> — проброс порта 8081 для доступа к веб-интерфейсу.</li>
+                                    <li><code>-v /opt/nexus-data:/nexus-data</code> — монтирование директории для хранения данных.</li>
+                                    <li><code>sonatype/nexus3:latest</code> — использование последней версии образа Nexus.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">3</div>
+                                <h3>Проверка статуса контейнера</h3>
+                            </div>
+                            <p>Убедитесь, что контейнер запущен:</p>
+                            <div class="code-block">
+                                <code>docker ps</code>
+                                <button class="copy-btn" data-code="docker ps">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 9H11C9.89543 9 9 9.89543 9 11V20C9 21.1046 9.89543 22 11 22H20C21.1046 22 22 21.1046 22 20V11C22 9.89543 21.1046 9 20 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M5 15H4C3.46957 15 2.96086 14.7893 2.58579 14.4142C2.21071 14.0391 2 13.5304 2 13V4C2 3.46957 2.21071 2.96086 2.58579 2.58579C2.96086 2.21071 3.46957 2 4 2H13C13.5304 2 14.0391 2.21071 14.4142 2.58579C14.7893 2.96086 15 3.46957 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <p>Если контейнер не работает, проверьте логи для диагностики:</p>
+                            <div class="code-block">
+                                <code>docker logs nexus</code>
+                                <button class="copy-btn" data-code="docker logs nexus">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 9H11C9.89543 9 9 9.89543 9 11V20C9 21.1046 9.89543 22 11 22H20C21.1046 22 22 21.1046 22 20V11C22 9.89543 21.1046 9 20 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M5 15H4C3.46957 15 2.96086 14.7893 2.58579 14.4142C2.21071 14.0391 2 13.5304 2 13V4C2 3.46957 2.21071 2.96086 2.58579 2.58579C2.96086 2.21071 3.46957 2 4 2H13C13.5304 2 14.0391 2.21071 14.4142 2.58579C14.7893 2.96086 15 3.46957 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">4</div>
+                                <h3>Ожидание запуска Nexus</h3>
+                            </div>
+                            <p>Первый запуск Nexus может занять несколько минут, так как он создаёт необходимые файлы конфигурации и базы данных. Следите за логами, чтобы убедиться, что Nexus запустился:</p>
+                            <div class="code-block">
+                                <code>docker logs -f nexus</code>
+                                <button class="copy-btn" data-code="docker logs -f nexus">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 9H11C9.89543 9 9 9.89543 9 11V20C9 21.1046 9.89543 22 11 22H20C21.1046 22 22 21.1046 22 20V11C22 9.89543 21.1046 9 20 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M5 15H4C3.46957 15 2.96086 14.7893 2.58579 14.4142C2.21071 14.0391 2 13.5304 2 13V4C2 3.46957 2.21071 2.96086 2.58579 2.58579C2.96086 2.21071 3.46957 2 4 2H13C13.5304 2 14.0391 2.21071 14.4142 2.58579C14.7893 2.96086 15 3.46957 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <p>Когда в логах появится сообщение вроде <strong>Started Sonatype Nexus OSS</strong>, Nexus готов к использованию.</p>
+                        </div>
+                        
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">5</div>
+                                <h3>Доступ к веб-интерфейсу</h3>
+                            </div>
+                            <p>Откройте браузер и перейдите по адресу:</p>
+                            <div class="access-url">
+                                <span>http://&lt;IP-адрес-сервера&gt;:8081</span>
+                            </div>
+                            <p>Например, если сервер имеет IP 10.19.1.216, используйте:</p>
+                            <div class="access-url">
+                                <span>http://10.19.1.216:8081</span>
+                            </div>
+                        </div>
+                        
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">6</div>
+                                <h3>Первый вход в Nexus</h3>
+                            </div>
+                            <p><strong>Логин:</strong> Используйте имя пользователя <code>admin</code>.</p>
+                            <p><strong>Пароль:</strong> Пароль администратора сгенерирован автоматически и находится в файле <code>/opt/nexus-data/admin.password</code>. Посмотрите его с помощью:</p>
+                            <div class="code-block">
+                                <code>sudo cat /opt/nexus-data/admin.password</code>
+                                <button class="copy-btn" data-code="sudo cat /opt/nexus-data/admin.password">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 9H11C9.89543 9 9 9.89543 9 11V20C9 21.1046 9.89543 22 11 22H20C21.1046 22 22 21.1046 22 20V11C22 9.89543 21.1046 9 20 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M5 15H4C3.46957 15 2.96086 14.7893 2.58579 14.4142C2.21071 14.0391 2 13.5304 2 13V4C2 3.46957 2.21071 2.96086 2.58579 2.58579C2.96086 2.21071 3.46957 2 4 2H13C13.5304 2 14.0391 2.21071 14.4142 2.58579C14.7893 2.96086 15 3.46957 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <p>После входа система попросит вас сменить пароль. Установите новый безопасный пароль.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- APT Repositories Tab Content -->
+        <div class="tab-content" id="apt-tab">
+            <section class="hero installation-hero">
+                <div class="container">
+                    <div class="hero-content">
+                        <h1>Создание APT Репозиториев</h1>
+                        <p class="subtitle">Настройка и использование APT репозиториев в Nexus для управления Debian-пакетами</p>
+                    </div>
+                    <div class="hero-image">
+                        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="blob-animation">
+                            <path fill="#6366F1" d="M44.9,-76.5C58.3,-69.7,69.4,-57.5,77.3,-43.4C85.2,-29.2,89.8,-13.1,88.4,2.4C87,17.9,79.6,32.9,69.7,45.5C59.9,58.1,47.6,68.4,33.7,74.5C19.7,80.6,4,82.5,-11.6,80.1C-27.2,77.7,-42.7,71,-54.4,60.3C-66.1,49.5,-74,34.7,-79.4,18.3C-84.8,1.9,-87.7,-16,-82.7,-30.9C-77.6,-45.8,-64.6,-57.8,-50,-64.8C-35.4,-71.8,-19.2,-73.7,-1.9,-70.8C15.5,-67.8,31.5,-83.3,44.9,-76.5Z" transform="translate(100 100)" />
+                        </svg>
+                        <div class="repository-visualization">
+                            <div class="artifact artifact-1" data-speed="0.04"></div>
+                            <div class="artifact artifact-2" data-speed="0.05"></div>
+                            <div class="artifact artifact-3" data-speed="0.03"></div>
+                            <div class="repository"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="premium-section">
+                <div class="container">
+                    <h2>Создание APT Hosted Репозитория</h2>
+                    <p class="section-description">Локальный репозиторий для хранения ваших собственных .deb пакетов</p>
+                    
+                    <div class="installation-steps">
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">1</div>
+                                <h3>Создание нового репозитория</h3>
+                            </div>
+                            <p>Перейдите в раздел <strong>Repositories → нажмите Create repository</strong>.</p>
+                            <p>Выберите формат <strong>apt (hosted)</strong>.</p>
+                        </div>
+                        
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">2</div>
+                                <h3>Настройка репозитория</h3>
+                            </div>
+                            <p>Заполните следующие поля:</p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem; list-style-type: disc;">
+                                <li><strong>Name</strong>: local-deb-repo (имя вашего локального репозитория).</li>
+                                <li><strong>Format</strong>: apt.</li>
+                                <li><strong>Layout</strong>: default.</li>
+                                <li><strong>Distribution</strong>: bookworm (ваш дистрибутив Debian).</li>
+                                <li><strong>Sections</strong>: main (или добавьте дополнительные секции, если нужно: contrib, non-free).</li>
+                                <li><strong>Deployment Policy</strong>: Выберите Disable Redeploy (рекомендуется для production) или Allow Redeploy (для тестирования).</li>
+                            </ul>
+                            <p>Нажмите кнопку <strong>Create repository</strong>.</p>
+                        </div>
+                        
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">3</div>
+                                <h3>Загрузка .deb пакетов</h3>
+                            </div>
+                            <p>Перейдите в раздел <strong>Repositories → выберите local-deb-repo</strong>.</p>
+                            <p>Нажмите кнопку <strong>Upload</strong>.</p>
+                            <p>Выберите все ваши .deb файлы (например, Asterisk, Zabbix, PHP и т.д.) и загрузите их.</p>
+                            <div class="note">
+                                <p><strong>Примечание</strong>: Nexus автоматически определит правильную структуру каталогов (pool/main/...) для каждого пакета.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">4</div>
+                                <h3>Обновление метаданных</h3>
+                            </div>
+                            <p>После загрузки пакетов обновите метаданные репозитория:</p>
+                            <p>Через веб-интерфейс: Нажмите кнопку <strong>Rebuild Metadata</strong>.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="benefits premium-section">
+                <div class="container">
+                    <h2>Создание APT Proxy Репозитория</h2>
+                    <p class="section-description">Proxy репозиторий для кэширования пакетов из официальных источников Debian/Ubuntu</p>
+                    
+                    <div class="installation-steps">
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">1</div>
+                                <h3>Создание Proxy репозитория</h3>
+                            </div>
+                            <p>Перейдите в раздел <strong>Repositories → нажмите Create repository</strong>.</p>
+                            <p>Выберите формат <strong>apt (proxy)</strong>.</p>
+                        </div>
+                        
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">2</div>
+                                <h3>Настройка Proxy репозитория</h3>
+                            </div>
+                            <p>Заполните следующие поля:</p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem; list-style-type: disc;">
+                                <li><strong>Name</strong>: debian-bookworm-proxy (имя proxy репозитория).</li>
+                                <li><strong>Format</strong>: apt.</li>
+                                <li><strong>Layout</strong>: default.</li>
+                                <li><strong>Remote storage URL</strong>: Укажите URL официального репозитория Debian Bookworm</li>
+                            </ul>
+                            <div class="code-block">
+                                <code>http://deb.debian.org/debian</code>
+                                <button class="copy-btn" data-code="http://deb.debian.org/debian">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 9H11C9.89543 9 9 9.89543 9 11V20C9 21.1046 9.89543 22 11 22H20C21.1046 22 22 21.1046 22 20V11C22 9.89543 21.1046 9 20 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M5 15H4C3.46957 15 2.96086 14.7893 2.58579 14.4142C2.21071 14.0391 2 13.5304 2 13V4C2 3.46957 2.21071 2.96086 2.58579 2.58579C2.96086 2.21071 3.46957 2 4 2H13C13.5304 2 14.0391 2.21071 14.4142 2.58579C14.7893 2.96086 15 3.46957 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem; list-style-type: disc;">
+                                <li><strong>Distribution</strong>: bookworm.</li>
+                                <li><strong>Sections</strong>: main contrib non-free.</li>
+                            </ul>
+                            <p>Нажмите кнопку <strong>Create repository</strong>.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="installation premium-section">
+                <div class="container">
+                    <h2>Настройка доступа и использование репозиториев</h2>
+                    <p class="section-description">Настройка анонимного доступа и конфигурация клиентских систем</p>
+                    
+                    <div class="installation-steps">
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">1</div>
+                                <h3>Настройка доступа</h3>
+                            </div>
+                            <p>Если вы хотите разрешить анонимный доступ:</p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem; list-style-type: disc;">
+                                <li>Перейдите в раздел <strong>Security → Anonymous</strong>.</li>
+                                <li>Включите опцию <strong>Allow anonymous access</strong>.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">2</div>
+                                <h3>Важная информация о Group репозиториях</h3>
+                            </div>
+                            <p>В бесплатной версии Nexus Repository Manager поддержка Group репозиториев отсутствует. Вместо этого вы можете настроить два отдельных репозитория:</p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem; list-style-type: disc;">
+                                <li>APT Hosted для ваших локальных пакетов</li>
+                                <li>APT Proxy для кэширования официальных репозиториев Debian/Ubuntu</li>
+                            </ul>
+                            <p>Затем клиентские системы будут использовать оба репозитория одновременно.</p>
+                        </div>
+                        
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">3</div>
+                                <h3>Настройка клиентской системы</h3>
+                            </div>
+                            <p>Добавьте оба репозитория в sources.list:</p>
+                            <p>Создайте или отредактируйте файл <code>/etc/apt/sources.list.d/nexus.list</code>:</p>
+                            <div class="code-block">
+                                <code># Локальный репозиторий с вашими пакетами
+deb [signed-by=/usr/share/keyrings/nexus-key.gpg] http://10.19.1.216:8081/repository/local-deb-repo/ bookworm main
+
+# Proxy репозиторий для зависимостей
+deb [signed-by=/usr/share/keyrings/debian-archive-keyring.gpg] http://10.19.1.216:8081/repository/debian-bookworm-proxy/ bookworm main contrib non-free</code>
+                                <button class="copy-btn" data-code="# Локальный репозиторий с вашими пакетами&#10;deb [signed-by=/usr/share/keyrings/nexus-key.gpg] http://10.19.1.216:8081/repository/local-deb-repo/ bookworm main&#10;&#10;# Proxy репозиторий для зависимостей&#10;deb [signed-by=/usr/share/keyrings/debian-archive-keyring.gpg] http://10.19.1.216:8081/repository/debian-bookworm-proxy/ bookworm main contrib non-free">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 9H11C9.89543 9 9 9.89543 9 11V20C9 21.1046 9.89543 22 11 22H20C21.1046 22 22 21.1046 22 20V11C22 9.89543 21.1046 9 20 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M5 15H4C3.46957 15 2.96086 14.7893 2.58579 14.4142C2.21071 14.0391 2 13.5304 2 13V4C2 3.46957 2.21071 2.96086 2.58579 2.58579C2.96086 2.21071 3.46957 2 4 2H13C13.5304 2 14.0391 2.21071 14.4142 2.58579C14.7893 2.96086 15 3.46957 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">4</div>
+                                <h3>Как это работает?</h3>
+                            </div>
+                            <p><strong>APT Hosted репозиторий (local-deb-repo)</strong>:</p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem; list-style-type: disc;">
+                                <li>Хранит ваши локальные пакеты.</li>
+                                <li>Не требует подключения к интернету после загрузки пакетов.</li>
+                            </ul>
+                            <p><strong>APT Proxy репозиторий (debian-bookworm-proxy)</strong>:</p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem; list-style-type: disc;">
+                                <li>Кэширует официальные репозитории Debian Bookworm.</li>
+                                <li>Предоставляет зависимости для ваших пакетов.</li>
+                            </ul>
+                            <p><strong>Клиентская система</strong>:</p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem; list-style-type: disc;">
+                                <li>Использует оба репозитория одновременно.</li>
+                                <li>APT автоматически разрешает зависимости, проверяя сначала local-deb-repo, а затем debian-bookworm-proxy.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">5</div>
+                                <h3>Процесс разрешения зависимостей</h3>
+                            </div>
+                            <p>APT будет выполнять следующие действия при установке пакетов:</p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem; list-style-type: disc;">
+                                <li>Искать Asterisk, Zabbix и другие ваши пакеты в <strong>local-deb-repo</strong>.</li>
+                                <li>Искать зависимости (например, libc6, libssl3, libsqlite3-0) в <strong>debian-bookworm-proxy</strong>.</li>
+                            </ul>
+                            
+                            <p style="margin-top: 1rem;"><strong>Преимущества такого подхода:</strong></p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem; list-style-type: disc;">
+                                <li><strong>Простота настройки</strong>: Не требуется создавать Group репозиторий (который недоступен в бесплатной версии Nexus).</li>
+                                <li><strong>Автоматическое разрешение зависимостей</strong>: Proxy репозиторий обеспечивает доступ ко всем необходимым зависимостям из официальных источников.</li>
+                                <li><strong>Гибкость</strong>: Вы можете добавлять новые пакеты в local-deb-repo без необходимости изменять конфигурацию клиентских систем.</li>
+                            </ul>
+                            
+                            <p style="margin-top: 1rem;">Это решение обеспечивает:</p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem; list-style-type: disc;">
+                                <li>Локальное хранение ваших пакетов.</li>
+                                <li>Автоматическое разрешение зависимостей через proxy репозиторий.</li>
+                                <li>Минимальные изменения в конфигурации клиентских систем.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">6</div>
+                                <h3>Пример использования и проверка</h3>
+                            </div>
+                            <p><strong>Обновление списка пакетов:</strong></p>
+                            <div class="code-block">
+                                <code>sudo apt update</code>
+                                <button class="copy-btn" data-code="sudo apt update">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 9H11C9.89543 9 9 9.89543 9 11V20C9 21.1046 9.89543 22 11 22H20C21.1046 22 22 21.1046 22 20V11C22 9.89543 21.1046 9 20 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M5 15H4C3.46957 15 2.96086 14.7893 2.58579 14.4142C2.21071 14.0391 2 13.5304 2 13V4C2 3.46957 2.21071 2.96086 2.58579 2.58579C2.96086 2.21071 3.46957 2 4 2H13C13.5304 2 14.0391 2.21071 14.4142 2.58579C14.7893 2.96086 15 3.46957 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            
+                            <p><strong>Проверка доступности пакетов:</strong></p>
+                            <div class="code-block">
+                                <code>apt list -a asterisk
+apt list -a php8.2*
+apt list -a mysql-server
+apt list -a zabbix-server-mysql</code>
+                                <button class="copy-btn" data-code="apt list -a asterisk&#10;apt list -a php8.2*&#10;apt list -a mysql-server&#10;apt list -a zabbix-server-mysql">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 9H11C9.89543 9 9 9.89543 9 11V20C9 21.1046 9.89543 22 11 22H20C21.1046 22 22 21.1046 22 20V11C22 9.89543 21.1046 9 20 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M5 15H4C3.46957 15 2.96086 14.7893 2.58579 14.4142C2.21071 14.0391 2 13.5304 2 13V4C2 3.46957 2.21071 2.96086 2.58579 2.58579C2.96086 2.21071 3.46957 2 4 2H13C13.5304 2 14.0391 2.21071 14.4142 2.58579C14.7893 2.96086 15 3.46957 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            
+                            <p><strong>Установка пакетов:</strong></p>
+                            <div class="code-block">
+                                <code>sudo apt install asterisk php8.2 php8.2-cli php8.2-common php8.2-mysql mysql-server zabbix-server-mysql</code>
+                                <button class="copy-btn" data-code="sudo apt install asterisk php8.2 php8.2-cli php8.2-common php8.2-mysql mysql-server zabbix-server-mysql">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 9H11C9.89543 9 9 9.89543 9 11V20C9 21.1046 9.89543 22 11 22H20C21.1046 22 22 21.1046 22 20V11C22 9.89543 21.1046 9 20 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M5 15H4C3.46957 15 2.96086 14.7893 2.58579 14.4142C2.21071 14.0391 2 13.5304 2 13V4C2 3.46957 2.21071 2.96086 2.58579 2.58579C2.96086 2.21071 3.46957 2 4 2H13C13.5304 2 14.0391 2.21071 14.4142 2.58579C14.7893 2.96086 15 3.46957 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <p>APT автоматически:</p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem; list-style-type: disc;">
+                                <li>Возьмет ваши локальные пакеты из local-deb-repo.</li>
+                                <li>Возьмет зависимости из debian-bookworm-proxy.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Creating .deb Packages Tab Content -->
+        <div class="tab-content" id="deb-packages-tab">
+            <section class="hero installation-hero">
+                <div class="container">
+                    <div class="hero-content">
+                        <h1>Создание .deb пакетов</h1>
+                        <p class="subtitle">Инструкция по созданию .deb пакета из бинарного файла или скомпилированного ПО с использованием checkinstall</p>
+                    </div>
+                    <div class="hero-image">
+                        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="blob-animation">
+                            <path fill="#6366F1" d="M44.9,-76.5C58.3,-69.7,69.4,-57.5,77.3,-43.4C85.2,-29.2,89.8,-13.1,88.4,2.4C87,17.9,79.6,32.9,69.7,45.5C59.9,58.1,47.6,68.4,33.7,74.5C19.7,80.6,4,82.5,-11.6,80.1C-27.2,77.7,-42.7,71,-54.4,60.3C-66.1,49.5,-74,34.7,-79.4,18.3C-84.8,1.9,-87.7,-16,-82.7,-30.9C-77.6,-45.8,-64.6,-57.8,-50,-64.8C-35.4,-71.8,-19.2,-73.7,-1.9,-70.8C15.5,-67.8,31.5,-83.3,44.9,-76.5Z" transform="translate(100 100)" />
+                        </svg>
+                        <div class="repository-visualization">
+                            <div class="artifact artifact-1" data-speed="0.04"></div>
+                            <div class="artifact artifact-2" data-speed="0.05"></div>
+                            <div class="artifact artifact-3" data-speed="0.03"></div>
+                            <div class="repository"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="premium-section">
+                <div class="container">
+                    <h2>Создание .deb пакета с использованием checkinstall</h2>
+                    <p class="section-description">Процесс создания Debian-пакетов из исходного кода для последующего размещения в вашем APT репозитории</p>
+                    
+                    <div class="installation-steps">
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">1</div>
+                                <h3>Установка необходимых инструментов</h3>
+                            </div>
+                            <p>Убедитесь, что на вашей системе установлен checkinstall:</p>
+                            <div class="code-block">
+                                <code>sudo apt update
+sudo apt install checkinstall</code>
+                                <button class="copy-btn" data-code="sudo apt update&#10;sudo apt install checkinstall">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 9H11C9.89543 9 9 9.89543 9 11V20C9 21.1046 9.89543 22 11 22H20C21.1046 22 22 21.1046 22 20V11C22 9.89543 21.1046 9 20 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M5 15H4C3.46957 15 2.96086 14.7893 2.58579 14.4142C2.21071 14.0391 2 13.5304 2 13V4C2 3.46957 2.21071 2.96086 2.58579 2.58579C2.96086 2.21071 3.46957 2 4 2H13C13.5304 2 14.0391 2.21071 14.4142 2.58579C14.7893 2.96086 15 3.46957 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">2</div>
+                                <h3>Сборка программы</h3>
+                            </div>
+                            <p><strong>a) Получите исходный код программы</strong></p>
+                            <p>Скачайте исходный код программы (например, Asterisk):</p>
+                            <div class="code-block">
+                                <code>wget https://downloads.asterisk.org/pub/telephony/asterisk/asterisk-18.26.1.tar.gz
+tar -xzf asterisk-18.26.1.tar.gz
+cd asterisk-18.26.1</code>
+                                <button class="copy-btn" data-code="wget https://downloads.asterisk.org/pub/telephony/asterisk/asterisk-18.26.1.tar.gz&#10;tar -xzf asterisk-18.26.1.tar.gz&#10;cd asterisk-18.26.1">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 9H11C9.89543 9 9 9.89543 9 11V20C9 21.1046 9.89543 22 11 22H20C21.1046 22 22 21.1046 22 20V11C22 9.89543 21.1046 9 20 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M5 15H4C3.46957 15 2.96086 14.7893 2.58579 14.4142C2.21071 14.0391 2 13.5304 2 13V4C2 3.46957 2.21071 2.96086 2.58579 2.58579C2.96086 2.21071 3.46957 2 4 2H13C13.5304 2 14.0391 2.21071 14.4142 2.58579C14.7893 2.96086 15 3.46957 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            
+                            <p><strong>b) Установите зависимости для сборки</strong></p>
+                            <p>Проверьте документацию программы, чтобы узнать список зависимостей. Например, для Asterisk:</p>
+                            <div class="code-block">
+                                <code>sudo apt install -y build-essential uuid-dev libssl-dev libedit-dev libjansson-dev libsqlite3-dev libpq-dev</code>
+                                <button class="copy-btn" data-code="sudo apt install -y build-essential uuid-dev libssl-dev libedit-dev libjansson-dev libsqlite3-dev libpq-dev">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 9H11C9.89543 9 9 9.89543 9 11V20C9 21.1046 9.89543 22 11 22H20C21.1046 22 22 21.1046 22 20V11C22 9.89543 21.1046 9 20 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M5 15H4C3.46957 15 2.96086 14.7893 2.58579 14.4142C2.21071 14.0391 2 13.5304 2 13V4C2 3.46957 2.21071 2.96086 2.58579 2.58579C2.96086 2.21071 3.46957 2 4 2H13C13.5304 2 14.0391 2.21071 14.4142 2.58579C14.7893 2.96086 15 3.46957 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            
+                            <p><strong>c) Настройте и соберите программу</strong></p>
+                            <p>Выполните стандартные шаги для компиляции:</p>
+                            <div class="code-block">
+                                <code>./configure --with-jansson-bundled --with-pjproject-bundled
+make</code>
+                                <button class="copy-btn" data-code="./configure --with-jansson-bundled --with-pjproject-bundled&#10;make">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 9H11C9.89543 9 9 9.89543 9 11V20C9 21.1046 9.89543 22 11 22H20C21.1046 22 22 21.1046 22 20V11C22 9.89543 21.1046 9 20 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M5 15H4C3.46957 15 2.96086 14.7893 2.58579 14.4142C2.21071 14.0391 2 13.5304 2 13V4C2 3.46957 2.21071 2.96086 2.58579 2.58579C2.96086 2.21071 3.46957 2 4 2H13C13.5304 2 14.0391 2.21071 14.4142 2.58579C14.7893 2.96086 15 3.46957 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">3</div>
+                                <h3>Создание .deb пакета с помощью checkinstall</h3>
+                            </div>
+                            <p>После успешной сборки, запустите checkinstall для создания .deb пакета:</p>
+                            <div class="code-block">
+                                <code>sudo checkinstall --install=no --pkgname=asterisk --pkgversion=18.26.1 --provides=asterisk --default</code>
+                                <button class="copy-btn" data-code="sudo checkinstall --install=no --pkgname=asterisk --pkgversion=18.26.1 --provides=asterisk --default">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 9H11C9.89543 9 9 9.89543 9 11V20C9 21.1046 9.89543 22 11 22H20C21.1046 22 22 21.1046 22 20V11C22 9.89543 21.1046 9 20 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M5 15H4C3.46957 15 2.96086 14.7893 2.58579 14.4142C2.21071 14.0391 2 13.5304 2 13V4C2 3.46957 2.21071 2.96086 2.58579 2.58579C2.96086 2.21071 3.46957 2 4 2H13C13.5304 2 14.0391 2.21071 14.4142 2.58579C14.7893 2.96086 15 3.46957 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="note">
+                                <p><strong>Объяснение параметров:</strong></p>
+                                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                                    <li><code>--install=no</code>: Отключает автоматическую установку пакета в систему.</li>
+                                    <li><code>--pkgname=asterisk</code>: Указывает имя пакета.</li>
+                                    <li><code>--pkgversion=18.26.1</code>: Указывает версию пакета.</li>
+                                    <li><code>--provides=asterisk</code>: Указывает, что этот пакет предоставляет функциональность Asterisk.</li>
+                                    <li><code>--default</code>: Использует стандартные параметры для создания пакета.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">4</div>
+                                <h3>Загрузка пакета в Nexus Repository</h3>
+                            </div>
+                            <p>После создания .deb пакета, вы найдете его в текущей директории. Теперь вы можете загрузить его в ваш APT Hosted репозиторий в Nexus:</p>
+                            <ol style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                                <li>Войдите в веб-интерфейс Nexus Repository Manager.</li>
+                                <li>Перейдите в раздел <strong>Repositories</strong> и выберите ваш <strong>local-deb-repo</strong>.</li>
+                                <li>Нажмите кнопку <strong>Upload</strong> и загрузите созданный .deb пакет.</li>
+                                <li>После загрузки не забудьте нажать <strong>Rebuild Metadata</strong>.</li>
+                            </ol>
+                        </div>
+                        
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">5</div>
+                                <h3>Автоматизация процесса</h3>
+                            </div>
+                            <p>Для автоматизации процесса создания и загрузки пакетов вы можете использовать скрипты. Пример скрипта для автоматического создания .deb пакета:</p>
+                            <div class="code-block">
+                                <code>#!/bin/bash
+# Пример автоматизации создания пакета
+
+PKG_NAME="asterisk"
+PKG_VERSION="18.26.1"
+SRC_URL="https://downloads.asterisk.org/pub/telephony/asterisk/asterisk-${PKG_VERSION}.tar.gz"
+
+# Создание временной директории
+WORK_DIR=$(mktemp -d)
+cd "$WORK_DIR"
+
+# Скачивание и распаковка исходников
+wget "$SRC_URL"
+tar -xzf "asterisk-${PKG_VERSION}.tar.gz"
+cd "asterisk-${PKG_VERSION}"
+
+# Установка зависимостей
+sudo apt install -y build-essential uuid-dev libssl-dev libedit-dev libjansson-dev libsqlite3-dev libpq-dev
+
+# Конфигурация и сборка
+./configure --with-jansson-bundled --with-pjproject-bundled
+make
+
+# Создание .deb пакета
+sudo checkinstall --install=no --pkgname="$PKG_NAME" --pkgversion="$PKG_VERSION" --provides="$PKG_NAME" --default
+
+# Перемещение пакета в нужную директорию
+mv *.deb ~/packages/
+
+echo "Создание пакета завершено. Пакет находится в ~/packages/"</code>
+                                <button class="copy-btn" data-code="#!/bin/bash&#10;# Пример автоматизации создания пакета&#10;&#10;PKG_NAME=&quot;asterisk&quot;&#10;PKG_VERSION=&quot;18.26.1&quot;&#10;SRC_URL=&quot;https://downloads.asterisk.org/pub/telephony/asterisk/asterisk-${PKG_VERSION}.tar.gz&quot;&#10;&#10;# Создание временной директории&#10;WORK_DIR=$(mktemp -d)&#10;cd &quot;$WORK_DIR&quot;&#10;&#10;# Скачивание и распаковка исходников&#10;wget &quot;$SRC_URL&quot;&#10;tar -xzf &quot;asterisk-${PKG_VERSION}.tar.gz&quot;&#10;cd &quot;asterisk-${PKG_VERSION}&quot;&#10;&#10;# Установка зависимостей&#10;sudo apt install -y build-essential uuid-dev libssl-dev libedit-dev libjansson-dev libsqlite3-dev libpq-dev&#10;&#10;# Конфигурация и сборка&#10;./configure --with-jansson-bundled --with-pjproject-bundled&#10;make&#10;&#10;# Создание .deb пакета&#10;sudo checkinstall --install=no --pkgname=&quot;$PKG_NAME&quot; --pkgversion=&quot;$PKG_VERSION&quot; --provides=&quot;$PKG_NAME&quot; --default&#10;&#10;# Перемещение пакета в нужную директорию&#10;mv *.deb ~/packages/&#10;&#10;echo &quot;Создание пакета завершено. Пакет находится в ~/packages/&quot;">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 9H11C9.89543 9 9 9.89543 9 11V20C9 21.1046 9.89543 22 11 22H20C21.1046 22 22 21.1046 22 20V11C22 9.89543 21.1046 9 20 9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M5 15H4C3.46957 15 2.96086 14.7893 2.58579 14.4142C2.21071 14.0391 2 13.5304 2 13V4C2 3.46957 2.21071 2.96086 2.58579 2.58579C2.96086 2.21071 3.46957 2 4 2H13C13.5304 2 14.0391 2.21071 14.4142 2.58579C14.7893 2.96086 15 3.46957 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Other Repositories Tab Content -->
+        <div class="tab-content" id="other-repos-tab">
+            <section class="hero installation-hero">
+                <div class="container">
+                    <div class="hero-content">
+                        <h1>Другие типы репозиториев</h1>
+                        <p class="subtitle">Настройка репозиториев для хранения и управления различными типами файлов</p>
+                    </div>
+                    <div class="hero-image">
+                        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="blob-animation">
+                            <path fill="#6366F1" d="M44.9,-76.5C58.3,-69.7,69.4,-57.5,77.3,-43.4C85.2,-29.2,89.8,-13.1,88.4,2.4C87,17.9,79.6,32.9,69.7,45.5C59.9,58.1,47.6,68.4,33.7,74.5C19.7,80.6,4,82.5,-11.6,80.1C-27.2,77.7,-42.7,71,-54.4,60.3C-66.1,49.5,-74,34.7,-79.4,18.3C-84.8,1.9,-87.7,-16,-82.7,-30.9C-77.6,-45.8,-64.6,-57.8,-50,-64.8C-35.4,-71.8,-19.2,-73.7,-1.9,-70.8C15.5,-67.8,31.5,-83.3,44.9,-76.5Z" transform="translate(100 100)" />
+                        </svg>
+                        <div class="repository-visualization">
+                            <div class="artifact artifact-1" data-speed="0.04"></div>
+                            <div class="artifact artifact-2" data-speed="0.05"></div>
+                            <div class="artifact artifact-3" data-speed="0.03"></div>
+                            <div class="repository"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="premium-section">
+                <div class="container">
+                    <h2>Создание репозитория для бинарных файлов</h2>
+                    <p class="section-description">Хранение и управление произвольными бинарными файлами в Nexus Repository Manager</p>
+                    
+                    <div class="installation-steps">
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">1</div>
+                                <h3>Создание нового репозитория</h3>
+                            </div>
+                            <p>Перейдите в раздел <strong>Repositories → нажмите Create repository</strong>.</p>
+                            <p>Выберите тип репозитория <strong>raw (hosted)</strong>.</p>
+                        </div>
+                        
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">2</div>
+                                <h3>Настройка репозитория</h3>
+                            </div>
+                            <p>Заполните следующие поля:</p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem; list-style-type: disc;">
+                                <li><strong>Name</strong>: Укажите имя репозитория (например, binary-repo).</li>
+                                <li><strong>Repository Format</strong>: Выберите Raw.</li>
+                                <li><strong>Storage</strong>: Убедитесь, что путь к хранилищу указан правильно.</li>
+                            </ul>
+                            <p>Нажмите кнопку <strong>Create repository</strong>.</p>
+                        </div>
+                        
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">3</div>
+                                <h3>Загрузка файлов</h3>
+                            </div>
+                            <p>Перейдите в созданный репозиторий (например, binary-repo).</p>
+                            <p>Нажмите <strong>Upload</strong>.</p>
+                            <p>Выберите файлы для загрузки (например, .zip, .tar.gz, .exe и т.д.).</p>
+                            <p>Укажите путь для файла в репозитории (например, /path/to/file.zip).</p>
+                            <p>Нажмите <strong>Upload</strong>.</p>
+                        </div>
+                        
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">4</div>
+                                <h3>Проверка загруженных файлов</h3>
+                            </div>
+                            <p>После загрузки файлов в Nexus убедитесь, что они доступны:</p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem; list-style-type: disc;">
+                                <li>Перейдите в веб-интерфейс Nexus → "Browse" → выберите репозиторий.</li>
+                                <li>Убедитесь, что структура папок и файлов соответствует вашим ожиданиям.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="step-card premium-card">
+                            <div class="step-header">
+                                <div class="step-number">5</div>
+                                <h3>Использование файлов</h3>
+                            </div>
+                            <p>Для доступа к файлам используйте следующий формат URL:</p>
+                            <div class="access-url">
+                                <span>http://&lt;IP-адрес-сервера&gt;:8081/repository/&lt;имя-репозитория&gt;/&lt;путь-к-файлу&gt;</span>
+                            </div>
+                            <p>Например:</p>
+                            <div class="access-url">
+                                <span>http://10.19.1.216:8081/repository/binary-repo/path/to/file.zip</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="features premium-section">
+                <div class="container">
+                    <h2>Другие форматы репозиториев в Nexus</h2>
+                    <p class="section-description">Nexus Repository Manager поддерживает множество форматов репозиториев для различных типов артефактов</p>
+                    
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-card-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M22 12H18L15 21L9 3L6 12H2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h3>Maven</h3>
+                            <p>Для Java библиотек и приложений, использующих систему сборки Maven</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-card-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8 9L12 5L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M16 15L12 19L8 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h3>npm</h3>
+                            <p>Для JavaScript/Node.js пакетов из npm registry</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-card-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M3 9H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M9 21V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h3>NuGet</h3>
+                            <p>Для .NET пакетов и библиотек</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-card-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M21 2H3V22H21V2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M7 2V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M17 2V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h3>Docker</h3>
+                            <p>Для хранения и распространения Docker образов</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Visualization Tab Content -->
+        <div class="tab-content" id="visualization-tab">
+            <section class="hero installation-hero">
+                <div class="container">
+                    <div class="hero-content">
+                        <h1>Визуализация работы Nexus</h1>
+                        <p class="subtitle">Интерактивная демонстрация процессов в системе управления артефактами</p>
+                    </div>
+                    <div class="hero-image">
+                        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="blob-animation">
+                            <path fill="#6366F1" d="M44.9,-76.5C58.3,-69.7,69.4,-57.5,77.3,-43.4C85.2,-29.2,89.8,-13.1,88.4,2.4C87,17.9,79.6,32.9,69.7,45.5C59.9,58.1,47.6,68.4,33.7,74.5C19.7,80.6,4,82.5,-11.6,80.1C-27.2,77.7,-42.7,71,-54.4,60.3C-66.1,49.5,-74,34.7,-79.4,18.3C-84.8,1.9,-87.7,-16,-82.7,-30.9C-77.6,-45.8,-64.6,-57.8,-50,-64.8C-35.4,-71.8,-19.2,-73.7,-1.9,-70.8C15.5,-67.8,31.5,-83.3,44.9,-76.5Z" transform="translate(100 100)" />
+                        </svg>
+                        <div class="repository-visualization">
+                            <div class="artifact artifact-1" data-speed="0.04"></div>
+                            <div class="artifact artifact-2" data-speed="0.05"></div>
+                            <div class="artifact artifact-3" data-speed="0.03"></div>
+                            <div class="repository"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="premium-section visualization-demo">
+                <div class="container">
+                    <h2>Как работает Nexus Repository Manager</h2>
+                    <p class="section-description">Интерактивная схема работы системы управления артефактами</p>
+                    
+                    <div class="visualization-container">
+                        <div class="visualization-controls">
+                            <button id="start-visualization" class="primary-btn">Запустить визуализацию</button>
+                            <button id="reset-visualization" class="secondary-btn">Сбросить</button>
+                        </div>
+                        
+                        <div class="visualization-scene">
+                            <div class="developer-system entity">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" stroke="white" stroke-width="2"/>
+                                    <path d="M8 21H16" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                    <path d="M12 17V21" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                <span>Разработчик</span>
+                            </div>
+                            
+                            <div class="artifact-object entity" id="artifact1">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M21 16V8.00002C20.9996 7.6493 20.9071 7.30483 20.7315 7.00119C20.556 6.69754 20.3037 6.44539 20 6.27002L13 2.27002C12.696 2.09449 12.3511 2.00229 12 2.00229C11.6489 2.00229 11.304 2.09449 11 2.27002L4 6.27002C3.69626 6.44539 3.44398 6.69754 3.26846 7.00119C3.09294 7.30483 3.00036 7.6493 3 8.00002V16C3.00036 16.3508 3.09294 16.6952 3.26846 16.9989C3.44398 17.3025 3.69626 17.5547 4 17.73L11 21.73C11.304 21.9056 11.6489 21.9978 12 21.9978C12.3511 21.9978 12.696 21.9056 13 21.73L20 17.73C20.3037 17.5547 20.556 17.3025 20.7315 16.9989C20.9071 16.6952 20.9996 16.3508 21 16Z" stroke="#00BFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M3.27002 7.00001L12 12L20.73 7.00001" stroke="#00BFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M12 22V12" stroke="#00BFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span>Артефакт</span>
+                            </div>
+                            
+                            <div class="nexus-server entity">
+                                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#00CE7C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M2 17L12 22L22 17" stroke="#00CE7C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M2 12L12 17L22 12" stroke="#00CE7C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span>Nexus Repository</span>
+                                <div class="repo-layers">
+                                    <div class="repo-layer" id="repo-hosted">Hosted</div>
+                                    <div class="repo-layer" id="repo-proxy">Proxy</div>
+                                    <div class="repo-layer" id="repo-group">Group</div>
+                                </div>
+                            </div>
+                            
+                            <div class="central-registry entity">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="12" cy="12" r="10" stroke="#FFA500" stroke-width="2"/>
+                                    <path d="M12 2V4" stroke="#FFA500" stroke-width="2" stroke-linecap="round"/>
+                                    <path d="M12 20V22" stroke="#FFA500" stroke-width="2" stroke-linecap="round"/>
+                                    <path d="M4 12H2" stroke="#FFA500" stroke-width="2" stroke-linecap="round"/>
+                                    <path d="M22 12H20" stroke="#FFA500" stroke-width="2" stroke-linecap="round"/>
+                                    <path d="M19.7783 4.22168L18.364 5.63589" stroke="#FFA500" stroke-width="2" stroke-linecap="round"/>
+                                    <path d="M5.63589 18.364L4.22168 19.7782" stroke="#FFA500" stroke-width="2" stroke-linecap="round"/>
+                                    <path d="M19.7783 19.7783L18.364 18.3641" stroke="#FFA500" stroke-width="2" stroke-linecap="round"/>
+                                    <path d="M5.63589 5.63589L4.22168 4.22168" stroke="#FFA500" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <span>Центральный репозиторий</span>
+                            </div>
+                            
+                            <div class="client-system entity">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" stroke="white" stroke-width="2"/>
+                                    <path d="M8 21H16" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                    <path d="M12 17V21" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                <span>Клиентская система</span>
+                            </div>
+                            
+                            <div class="artifact-object entity" id="artifact2">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M21 16V8.00002C20.9996 7.6493 20.9071 7.30483 20.7315 7.00119C20.556 6.69754 20.3037 6.44539 20 6.27002L13 2.27002C12.696 2.09449 12.3511 2.00229 12 2.00229C11.6489 2.00229 11.304 2.09449 11 2.27002L4 6.27002C3.69626 6.44539 3.44398 6.69754 3.26846 7.00119C3.09294 7.30483 3.00036 7.6493 3 8.00002V16C3.00036 16.3508 3.09294 16.6952 3.26846 16.9989C3.44398 17.3025 3.69626 17.5547 4 17.73L11 21.73C11.304 21.9056 11.6489 21.9978 12 21.9978C12.3511 21.9978 12.696 21.9056 13 21.73L20 17.73C20.3037 17.5547 20.556 17.3025 20.7315 16.9989C20.9071 16.6952 20.9996 16.3508 21 16Z" stroke="#00BFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M3.27002 7.00001L12 12L20.73 7.00001" stroke="#00BFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M12 22V12" stroke="#00BFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span>Артефакт</span>
+                            </div>
+                            
+                            <!-- Коннекторы -->
+                            <div id="connector1" class="connector"></div>
+                            <div id="connector2" class="connector"></div>
+                            <div id="connector3" class="connector"></div>
+                            <div id="connector4" class="connector"></div>
+                            
+                            <!-- Индикаторы процессов -->
+                            <div id="process-indicator1" class="process-indicator">Публикация</div>
+                            <div id="process-indicator2" class="process-indicator">Кэширование</div>
+                            <div id="process-indicator3" class="process-indicator">Загрузка</div>
+                        </div>
+                        
+                        <div class="visualization-steps">
+                            <div class="step active" data-step="1">
+                                <div class="step-number">1</div>
+                                <p>Разработчик публикует артефакт в Nexus Hosted репозиторий</p>
+                            </div>
+                            <div class="step" data-step="2">
+                                <div class="step-number">2</div>
+                                <p>Клиент запрашивает артефакт из Nexus Group репозитория</p>
+                            </div>
+                            <div class="step" data-step="3">
+                                <div class="step-number">3</div>
+                                <p>Если артефакт отсутствует, Nexus запрашивает его из центрального репозитория через Proxy</p>
+                            </div>
+                            <div class="step" data-step="4">
+                                <div class="step-number">4</div>
+                                <p>Nexus кэширует артефакт в локальном хранилище для будущих запросов</p>
+                            </div>
+                            <div class="step" data-step="5">
+                                <div class="step-number">5</div>
+                                <p>Клиент получает требуемый артефакт из Nexus</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="visualization-explanation">
+                        <h3>Пояснение к визуализации</h3>
+                        <div class="explanation-content">
+                            <p><strong>Hosted репозиторий</strong> — хранит артефакты, созданные вашей организацией. Это полностью управляемое вами хранилище для ваших внутренних проектов и библиотек.</p>
+                            <p><strong>Proxy репозиторий</strong> — кэширует артефакты из внешних источников.</p>
+                            <p><strong>Group репозиторий</strong> — объединяет несколько репозиториев в единую точку доступа.</p>
+                            <p>Эта визуализация демонстрирует ключевое преимущество использования Nexus: один раз загруженный внешний артефакт кэшируется локально, что ускоряет сборку проектов и снижает зависимость от внешних источников.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="premium-section">
+                <div class="container">
+                    <h2>Жизненный цикл артефакта</h2>
+                    <p class="section-description">От создания до использования в приложении</p>
+                    
+                    <div class="lifecycle-container">
+                        <div class="lifecycle-stage">
+                            <div class="stage-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h3>Разработка</h3>
+                            <p>Создание кода, компиляция программ или библиотек</p>
+                        </div>
+                        
+                        <div class="lifecycle-arrow">→</div>
+                        
+                        <div class="lifecycle-stage">
+                            <div class="stage-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 10v6m-3-3h6m2 9H7a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v14a2 2 0 01-2 2z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h3>Распространение</h3>
+                            <p>Доставка артефактов в нужные окружения</p>
+                        </div>
+                        
+                        <div class="lifecycle-arrow">→</div>
+                        
+                        <div class="lifecycle-stage">
+                            <div class="stage-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M12 18H13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h3>Использование</h3>
+                            <p>Интеграция в приложения и системы</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Nexus Sonatype</span>
+                </div>
+                <div class="footer-links">
+                    <div class="tab-footer-links" id="product-footer-links">
+                        <ul>
+                            <li><a href="#about">О продукте</a></li>
+                            <li><a href="#features">Возможности</a></li>
+                            <li><a href="#artifacts">Артефакты</a></li>
+                            <li><a href="#repos">Репозитории</a></li>
+                            <li><a href="#benefits">Преимущества</a></li>
+                        </ul>
+                    </div>
+                    <div class="tab-footer-links" id="installation-footer-links">
+                        <ul>
+                            <li><a href="#installation">Установка Docker</a></li>
+                            <li><a href="#nexus-docker">Запуск Nexus</a></li>
+                        </ul>
+                    </div>
+                    <div class="tab-footer-links" id="apt-footer-links">
+                        <ul>
+                            <li><a href="#apt-hosted">APT Hosted</a></li>
+                            <li><a href="#apt-proxy">APT Proxy</a></li>
+                            <li><a href="#apt-usage">Использование</a></li>
+                        </ul>
+                    </div>
+                    <div class="tab-footer-links" id="deb-packages-footer-links">
+                        <ul>
+                            <li><a href="#deb-install">Установка инструментов</a></li>
+                            <li><a href="#deb-build">Сборка программы</a></li>
+                            <li><a href="#deb-package">Создание пакета</a></li>
+                        </ul>
+                    </div>
+                    <div class="tab-footer-links" id="other-repos-footer-links">
+                        <ul>
+                            <li><a href="#binary-repo">Бинарные репозитории</a></li>
+                            <li><a href="#other-formats">Другие форматы</a></li>
+                        </ul>
+                    </div>
+                    <div class="tab-footer-links" id="visualization-footer-links">
+                        <ul>
+                            <li><a href="#visualization">Визуализация</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Nexus Sonatype. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
